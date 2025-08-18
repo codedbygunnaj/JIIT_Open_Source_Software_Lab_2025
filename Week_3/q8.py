@@ -1,8 +1,13 @@
-def avg(l):
-    avg=0.0
+def avgMe(l):
+    avg = 0.0
     for i in l:
-        avg+=i
-    avg=avg/len(l)
+        avg += i
+    return avg / len(l)   # FIX: must return
 
-if __name__=="__main__":
-    
+def count_above_average(nums):
+    avg = avgMe(nums)
+    ans = []
+    for i in nums:
+        if i > avg:
+            ans.append(i)
+    return len(ans)   # FIX: must return count, not list
