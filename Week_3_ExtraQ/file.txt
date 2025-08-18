@@ -1,0 +1,2 @@
+a part of a piece of writing that consists of one or more sentences. A paragraph always starts on a new line.
+Paragraphs are the building blocks of papers. Many students define paragraphs in terms of length: a paragraph is a group of at least five sentences

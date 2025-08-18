@@ -14,3 +14,5 @@ def flat(lis):
         final.extend(ls)
 
 #O(N)
+def flatten_matrix(matrix):
+    return [x for row in matrix for x in row]
