@@ -1,0 +1,209 @@
+arange -> create list of elements which a specific range (start,stop+1)
+       -> can also work with just 1 arg i.e arange(9) => means it'll generate 9 numbers from 0 to 9 [0,....,8]
+
+[::-1] -> used to reverse, As usual
+
+reshape: function transforms an array into a 2D matrix with 3 rows and 3 columns, provided the original array has exactly 9 elements.
+
+nonzero(lst) => tells indices whose value are non-zero numbers
+
+eye(size): creates identity matrix of size*size
+
+random(size): The function np.random.random(size) creates an array of the specified size and fills it with random numbers between 0.0 and 1.0.
+
+    x = np.random.random((3,3))
+        This creates a 2D array (or a 3x3 matrix) filled with random numbers.
+
+    y = np.random.random(3)
+        This creates a 1D array (or a vector) with 3 random numbers.
+
+    z = np.random.random((3,3,3))
+        This creates a 3D array. You can think of it as a cube made of 3 separate 3x3 matrices stacked together.
+
+.min() and .max() => min and max val out of a matrix
+
+np.mean(list) => mean of the list
+
+ones =>creates matrix with value 1
+    import numpy as np
+    print(np.ones(5))
+    print(np.ones((10,5)))
+
+padding of zeroes inside 1:
+    import numpy as np
+    x=np.ones((10,10))
+    x[1:-1,1:-1]=0
+    print(x)
+
+    Explanation of code:
+        Let's break down what each part does.
+
+            Certainly. The np.pad() function is a more direct and powerful way to add a border to an existing array.
+
+            In short, this code takes an existing array x and adds a padding of a specified width around it, filling the new border with a constant value of zero.
+
+            Function Breakdown
+            Let's break down the arguments used in np.pad():
+
+            x: The first argument is simply the input array you want to add a border to.
+
+            pad_width=1: This determines the thickness of the border. A value of 1 means a border that is one element thick will be added around the entire array (one row on the top and bottom, one column on the left and right).
+
+            mode='constant': This tells NumPy how to fill the new border. The 'constant' mode means the border will be filled with a single, unchanging value. Other modes exist, like 'edge' (which repeats the edge values) or 'reflect'.
+
+            constant_values=0: Since the mode is 'constant', this argument specifies what that constant value should be. Here, it's 0.
+
+            How It Compares to the Slicing Method
+            The two methods achieve a similar visual result but in opposite ways:
+
+            Slicing (x[1:-1,1:-1]=0): You start with a large canvas of ones and then "carve out" or "hollow out" the center by setting it to zero.
+
+            Padding (np.pad(...)): You start with your core data and then "build a frame" around it. This is often more intuitive because you don't need to create an oversized array beforehand.
+
+
+    Of course. Here’s a simple explanation of the 'edge' and 'reflect' padding modes.
+
+    mode='edge'
+    This mode pads the array by repeating the value from the very edge. Think of it as stretching or smearing the edge pixel outwards. ↔️
+
+    Python
+
+    import numpy as np
+
+    arr = np.array([1, 2, 3])
+
+    # Pad with a width of 2 on each side
+    padded_arr = np.pad(arr, pad_width=2, mode='edge')
+
+    print(f"Original: {arr}")
+    print(f"Padded:   {padded_arr}")
+    # Original: [1 2 3]
+    # The left edge (1) is repeated twice. The right edge (3) is repeated twice.
+    # Padded:   [1 1 1 2 3 3 3]
+    mode='reflect'
+    This mode pads the array by reflecting the values across the edge, like looking in a mirror. The edge value itself is not repeated. 🪞
+
+    Python
+
+    import numpy as np
+
+    arr = np.array([1, 2, 3])
+
+    # Pad with a width of 2 on each side
+    padded_arr = np.pad(arr, pad_width=2, mode='reflect')
+
+    print(f"Original: {arr}")
+    print(f"Padded:   {padded_arr}")
+
+    # Original: [1 2 3]
+    # The right edge reflects the values before it (2, then 1).
+    # The left edge reflects the values after it (2, then 3).
+    # Padded:   [3 2 1 2 3 2 1]
+    (Note: I used a slightly different result in the comment to make the reflection clearer. With [1, 2, 3], the reflection of 2 off the 1 edge gives 2, and the reflection of 2 off the 3 edge gives 2. The code output is correct.)
+
+    Key Difference
+    edge: Just repeats the boundary number (1 and 3).
+
+    reflect: Mirrors the sequence of numbers from the boundary (...3, 2, | 1 and 3 | 2, 1...).
+
+
+dot() => to multiply 2 matrices:
+    np.dot(matrix1,matrix2)
+
+boolean indexing:
+
+    How It Works
+        Here is the step-by-step process for the corrected code:
+
+        Correct Code
+        Python
+
+        import numpy as np
+
+        z = np.arange(11)
+
+        # Correct way to create the condition
+        mask = (z >= 3) & (z <= 8)
+
+        # Use the mask to modify the array
+        z[mask] *= -1
+
+        print(z)
+        Step 1: Create a Boolean "Mask"
+        First, NumPy evaluates the condition inside the brackets (z >= 3) & (z <= 8). It does this in parts:
+
+        z >= 3 produces a boolean array:
+        [False, False, False, True, True, True, True, True, True, False, False]
+
+        z <= 8 produces another boolean array:
+        [True, True, True, True, True, True, True, True, True, False, False]
+
+        The & operator then compares these two arrays element by element to produce a final mask:
+
+        # The final mask
+        [False, False, False, True, True, True, True, True, True, False, False]
+        This mask is the "filter" you'll use.
+
+        Step 2: Apply the Mask
+        Next, NumPy uses this mask to select elements from z. It looks at the mask and picks out only the elements from z that correspond to a True position.
+
+        Selected elements: [3, 4, 5, 6, 7, 8]
+
+        Step 3: Modify the Selected Elements
+        Finally, the operation *= -1 (negation) is applied only to the elements that were selected in Step 2.
+
+        Final Output
+        The original z array is modified in place, resulting in the final output:
+
+        [ 0  1  2 -3 -4 -5 -6 -7 -8  9 10]
+        So, to answer your question directly: you're not indexing with the numbers in z. You are indexing with the True/False result of a condition that you applied to z. It's a powerful way to filter and modify arrays based on their own data.
+
+Intersection -> common b/w arrays
+    => np.intersect1d(m1,m2)
+
+allclose and array_equal:
+
+    import numpy as np
+    x=np.random.randint(0,2,7)
+    y=np.random.randint(0,2,7)
+    equal=np.allclose(x,y)
+    print(equal)
+    equal=np.array_equal(x,y)
+    print(equal)
+
+    __Explanation:__ =>
+
+        The Core Difference
+        np.array_equal() is a strict, exact check. It returns True only if the arrays have the same shape and every single element is exactly the same. ⚖️
+
+        np.allclose() is a more flexible, approximate check. It returns True if the arrays have the same shape and their corresponding elements are "close enough" to each other within a certain tolerance. 📏
+
+            np.array_equal(): The Strict Judge
+            This function asks: "Are these two arrays bit-for-bit identical?" It's perfect for integers or when you need to be 100% sure the arrays are the same.
+
+            np.allclose(): The Flexible Inspector
+            This function asks: "Are these two arrays numerically similar?" This is essential for floating-point math, where tiny, insignificant precision errors can occur. For example, in a computer, 0.1 + 0.2 might result in 0.30000000000000004, which is not exactly 0.3.
+
+
+argmax/argmin:
+    The difference is that np.max() finds the highest value in the array, while np.argmax() finds the index (or position) of that highest value.
+
+    That's a great question that gets to the heart of how array indexing works.
+
+    The difference is that np.max() finds the highest value in the array, while np.argmax() finds the index (or position) of that highest value.
+
+    To change an element in an array, you need to know its index.
+
+    Why argmax is Necessary Here
+    The goal of the code Z[Z.argmax()] = 0 is to find the largest number in the array Z and replace it with 0.
+
+    Z.max() gives you the VALUE.
+    If your array is [0.1, 0.9, 0.5], Z.max() would return 0.9. You cannot use this value as an index, because Z[0.9] is invalid. Array indices must be integers.
+
+    Z.argmax() gives you the INDEX.
+    For the same array [0.1, 0.9, 0.5], Z.argmax() would return 1, because the maximum value (0.9) is at index 1. This index is exactly what you need to access and modify the element. 📍
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+**SEE py_18_extraFn.py**
